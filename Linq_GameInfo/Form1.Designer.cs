@@ -62,6 +62,7 @@ namespace Linq_GameInfo
             this.btnLevel.TabIndex = 1;
             this.btnLevel.Text = "레벨 순으로";
             this.btnLevel.UseVisualStyleBackColor = true;
+            this.btnLevel.Click += new System.EventHandler(this.btnSort_Click);
             // 
             // btnName
             // 
@@ -71,6 +72,7 @@ namespace Linq_GameInfo
             this.btnName.TabIndex = 2;
             this.btnName.Text = "이름 순으로";
             this.btnName.UseVisualStyleBackColor = true;
+            this.btnName.Click += new System.EventHandler(this.btnSort_Click);
             // 
             // btnAttribute
             // 
@@ -80,6 +82,7 @@ namespace Linq_GameInfo
             this.btnAttribute.TabIndex = 3;
             this.btnAttribute.Text = "속성별로";
             this.btnAttribute.UseVisualStyleBackColor = true;
+            this.btnAttribute.Click += new System.EventHandler(this.btnSort_Click);
             // 
             // cboxAttribute
             // 
@@ -111,6 +114,7 @@ namespace Linq_GameInfo
             this.btnFilter.TabIndex = 7;
             this.btnFilter.Text = "Filter";
             this.btnFilter.UseVisualStyleBackColor = true;
+            this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click);
             // 
             // btnCancel
             // 
@@ -120,6 +124,7 @@ namespace Linq_GameInfo
             this.btnCancel.TabIndex = 8;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // label1
             // 

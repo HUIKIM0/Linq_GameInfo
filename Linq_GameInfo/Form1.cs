@@ -52,7 +52,8 @@ namespace Linq_GameInfo
         private void Form1_Load(object sender, EventArgs e)
         {
             DataTableCreate();
-            DataEnemy();
+            DataEnemyCreate();
+            ComboAttributeCreate();
         }
 
         /* ★ 테이블 틀(레벨/이름/속성) 생성하기 ★ */
@@ -74,7 +75,7 @@ namespace Linq_GameInfo
 
 
         /* 테이블에 데이터 값 넣기 */
-        private void DataEnemy()
+        private void DataEnemyCreate()
         {
             Random rd = new Random();
 
@@ -93,18 +94,93 @@ namespace Linq_GameInfo
                 dt.Rows.Add(dr);
             }
 
-            // DataGridView에 DataTable값들 넣어서 보여주기
+            // ★DataGridView에 Data값들 넣어서 보여주기★
+            dgGameInfo.DataSource = dt;
+        }
+
+
+        /* 레벨/이름/속성 별로 정렬하기 */
+        private void btnSort_Click(object sender, EventArgs e)
+        {
+            Button Btn = sender as Button;
+
+            DataTable dtCopy = dgGameInfo.DataSource as DataTable;  // 데이터그리드뷰에 있는 데이터를 dtCopy에 복사
+            IEnumerable<DataRow> drSortTable = null;
+
+            switch (Btn.Name)
+            {
+                case"btnLevel":
+                    drSortTable = from oRow in dtCopy.AsEnumerable()
+                                  orderby oRow.Field<int>(sLEVEL)
+                                  select oRow;
+                    break;
+
+                case "btnName":
+                    drSortTable = from oRow in dtCopy.AsEnumerable()
+                                  orderby oRow.Field<string>(sNAME)
+                                  select oRow;
+                    break;
+
+                case"btnAttribute":
+                    drSortTable = from oRow in dtCopy.AsEnumerable()
+                                  orderby oRow.Field<string>(sATTRIBUTE)
+                                  select oRow;
+                    break;
+
+                default:
+                    MessageBox.Show("정렬 과정에서 오류가 생겼습니다 :(");
+                    break;
+            }
+            dtCopy = drSortTable.CopyToDataTable();
+            dgGameInfo.DataSource = dtCopy;  
+        }
+
+
+
+
+        /* 콤보박스 enum EnumAttribute를 입력  */
+        private void ComboAttributeCreate()
+        {
+            foreach (EnumAttribute eAttribute in Enum.GetValues(typeof(EnumAttribute)))
+            {
+                cboxAttribute.Items.Add(eAttribute);
+            }
+            cboxAttribute.SelectedIndex = 0;  //불
+        }
+
+
+
+        /* 필터 기능 -> 콤보박스(속성) && num업다운Min && num업다운Max */
+        private void btnFilter_Click(object sender, EventArgs e)
+        {
+            DataTable dtCopy = dgGameInfo.DataSource as DataTable;
+            IEnumerable<DataRow> drFilterData = from oRow in dtCopy.AsEnumerable()
+                                                where oRow.Field<string>(sATTRIBUTE) == cboxAttribute.Text &&
+                                                (oRow.Field<int>(sLEVEL) >= numLevelMin.Value && oRow.Field<int>(sLEVEL) <= numLevelMax.Value)
+                                                select oRow;
+
+
+
+            if (drFilterData.Count() > 0)
+            {
+                dtCopy = drFilterData.CopyToDataTable();
+                dgGameInfo.DataSource = dtCopy;
+
+            }
+            else
+            {
+                MessageBox.Show("검색 조건에 맞는 데이터가 없습니다 :(");
+            }
+
+        }
+
+
+        /* 초기화 하고 처음화면 보여주기 */
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            // 데이터그리드뷰에 그 어떠한 작업도 안된 DataTable 던져줌
             dgGameInfo.DataSource = dt;
         }
 
     }
-
-    /* 레벨/이름/속성 별로 정렬하기 */
-
-    /* 콤보박스 속성별로 정보보기  */
-
-    /* 필터 기능 */
-
-    /* 초기화 하고 처음화면 보여주기 */
-
 }
