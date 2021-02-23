@@ -22,7 +22,7 @@ namespace Linq_GameInfo
         {
             슬라임,
             가고일,
-            드래곤,
+            다크드래곤,
             사신기사,
             고블린,
             언데드,
@@ -30,6 +30,12 @@ namespace Linq_GameInfo
             골렘,
             웜,
             바실리스크,
+            갸라도스,
+            프쉬케,
+            피닉스,
+            엔더맨,
+            파이어드래곤,
+
         }
 
         enum EnumAttribute
@@ -96,6 +102,7 @@ namespace Linq_GameInfo
 
             // ★DataGridView에 Data값들 넣어서 보여주기★
             dgGameInfo.DataSource = dt;
+
         }
 
 
@@ -153,7 +160,9 @@ namespace Linq_GameInfo
         /* 필터 기능 -> 콤보박스(속성) && num업다운Min && num업다운Max */
         private void btnFilter_Click(object sender, EventArgs e)
         {
-            DataTable dtCopy = dgGameInfo.DataSource as DataTable;
+            //DataTable dtCopy = dgGameInfo.DataSource as DataTable;
+            DataTable dtCopy = dt;
+
             IEnumerable<DataRow> drFilterData = from oRow in dtCopy.AsEnumerable()
                                                 where oRow.Field<string>(sATTRIBUTE) == cboxAttribute.Text &&
                                                 (oRow.Field<int>(sLEVEL) >= numLevelMin.Value && oRow.Field<int>(sLEVEL) <= numLevelMax.Value)
