@@ -18,6 +18,7 @@ namespace Linq_GameInfo
 
         DataTable dt;
 
+
         enum EnumName
         {
             슬라임,
@@ -62,7 +63,7 @@ namespace Linq_GameInfo
             ComboAttributeCreate();
         }
 
-        /* ★ 테이블 틀(레벨/이름/속성) 생성하기 ★ */
+        /* ★ 테이블 틀(레벨/이름/속성) 생성하기. DataTable DataColumn ★ */
         private void DataTableCreate()
         {
             dt = new DataTable("Enemy Info");
@@ -80,7 +81,7 @@ namespace Linq_GameInfo
         }
 
 
-        /* 테이블에 데이터 값 넣기 */
+        /* 테이블에 데이터 값 넣기 DataRow */
         private void DataEnemyCreate()
         {
             Random rd = new Random();
@@ -92,9 +93,9 @@ namespace Linq_GameInfo
                 dr[sLEVEL] = rd.Next(1, 11);  // 레벨에 들어가는 값은 1~ 10 중에서 랜덤
                 dr[sNAME] = eName.ToString();  // foreach문 돌려서 나오는 이름
 
-                int iEnumAttribute = Enum.GetValues(typeof(EnumAttribute)).Length;  //enum EnumAttribute 길이(개수) 뽑아옴
-                int iAttributeRandom = rd.Next(iEnumAttribute);  // enum 범위 내에서 랜덤
-                dr[sATTRIBUTE] = ((EnumAttribute)iAttributeRandom);   // 나온 랜덤숫자 다시 enum으로 반환
+                int iEnumLength = Enum.GetValues(typeof(EnumAttribute)).Length;  //enum EnumAttribute 길이(개수) 뽑아옴
+                int iAttributeRandom = rd.Next(iEnumLength);  // enum 범위 내에서 랜덤
+                dr[sATTRIBUTE] = (EnumAttribute)iAttributeRandom;   // 나온 랜덤숫자에 해당되는 enum값  반환
 
 
                 dt.Rows.Add(dr);
@@ -106,7 +107,7 @@ namespace Linq_GameInfo
         }
 
 
-        /* 레벨/이름/속성 별로 정렬하기 */
+        /* 레벨/이름/속성 별로 정렬하기 클릭이벤트 만들어준거 */
         private void btnSort_Click(object sender, EventArgs e)
         {
             Button Btn = sender as Button;
